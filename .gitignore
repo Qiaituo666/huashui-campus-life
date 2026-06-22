@@ -1,0 +1,65 @@
+# =====================================================================
+# 华水校园生活服务平台 · .gitignore
+# =====================================================================
+
+# ---- Java / Maven ----
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+hs_err_pid*
+
+# ---- IDE ----
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---- Docker ----
+docker/*/data/
+docker/*/data/*
+
+# ---- Environment & Secrets ----
+.env
+.env.local
+.env.*.local
+*.log
+*.log.*
+
+# ---- Frontend (Vue/React) ----
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# ---- Build Output ----
+build/
+out/
+*.swp
+*.swo
+*~
+.bak
+
+# ---- Temp ----
+tmp/
+temp/
+*.tmp
+*.bak

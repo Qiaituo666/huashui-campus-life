@@ -1,0 +1,172 @@
+# =====================================================================
+# 华水校园生活服务平台 · Docker Compose 编排文件
+# 版本: V3.0  |  技术栈: PRD Section 10
+# 项目: huashui-campus-life
+# =====================================================================
+
+services:
+
+  # ==========================================================================
+  # 1. MySQL 8.0 — 主数据库
+  # ==========================================================================
+  huashui_mysql:
+    image: mysql:8.0
+    container_name: huashui_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_general_ci
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      - huashui_net
+
+  # ==========================================================================
+  # 2. Redis 7 — 缓存 & Token 存储
+  # ==========================================================================
+  huashui_redis:
+    image: redis:7-alpine
+    container_name: huashui_redis
+    restart: always
+    command: redis-server --requirepass redis123 --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./docker/redis/data:/data
+    networks:
+      - huashui_net
+
+  # ==========================================================================
+  # 3. RabbitMQ 3 — 异步消息
+  # ==========================================================================
+  huashui_rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: huashui_rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: huashui
+      RABBITMQ_DEFAULT_PASS: huashui123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./docker/rabbitmq/data:/var/lib/rabbitmq
+    networks:
+      - huashui_net
+
+  # ==========================================================================
+  # 4. Nacos — 注册中心 & 配置中心
+  # ==========================================================================
+  huashui_nacos:
+    image: nacos/nacos-server:v2.4.0
+    container_name: huashui_nacos
+    restart: always
+    environment:
+      MODE: standalone
+      PREFER_HOST_MODE: hostname
+      NACOS_AUTH_ENABLE: "true"
+      NACOS_AUTH_IDENTITY_KEY: huashui
+      NACOS_AUTH_IDENTITY_VALUE: huashui
+      NACOS_AUTH_TOKEN: SecretKey012345678901234567890123456789012345678901234567890123456789
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: huashui_mysql
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_NAME: nacos_config
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      MYSQL_SERVICE_DB_PARAM: characterEncoding=utf8&connectTimeout=3000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    volumes:
+      - ./docker/nacos/data:/home/nacos/data
+    depends_on:
+      huashui_mysql:
+        condition: service_healthy
+    networks:
+      - huashui_net
+
+  # ==========================================================================
+  # 5. Sentinel Dashboard — 暂未部署（镜像拉取受限）
+  #    等 Docker Hub 恢复后取消注释即可
+  # ==========================================================================
+  # huashui_sentinel:
+  #   image: bladex/sentinel-dashboard:1.8.8
+  #   container_name: huashui_sentinel
+  #   restart: always
+  #   environment:
+  #     SERVER_PORT: 8858
+  #     SENTINEL_DASHBOARD_USERNAME: huashui
+  #     SENTINEL_DASHBOARD_PASSWORD: huashui123
+  #   ports:
+  #     - "8858:8858"
+  #   depends_on:
+  #     huashui_nacos:
+  #       condition: service_started
+  #   networks:
+  #     - huashui_net
+
+  # ==========================================================================
+  # 6. MinIO — 图片/文件存储
+  # ==========================================================================
+  huashui_minio:
+    image: minio/minio:latest
+    container_name: huashui_minio
+    restart: always
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: huashui
+      MINIO_ROOT_PASSWORD: huashui123456
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./docker/minio/data:/data
+    networks:
+      - huashui_net
+
+  # ==========================================================================
+  # 7. XXL-JOB — 分布式定时任务
+  # ==========================================================================
+  huashui_xxljob:
+    image: xuxueli/xxl-job-admin:2.4.1
+    container_name: huashui_xxljob
+    restart: always
+    environment:
+      PARAMS: >
+        --spring.datasource.url=jdbc:mysql://huashui_mysql:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+        --spring.datasource.username=root
+        --spring.datasource.password=root
+        --spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+        --xxl.job.accessToken=huashui_xxl_token
+        --server.servlet.context-path=/xxl-job-admin
+    ports:
+      - "8081:8080"
+    depends_on:
+      huashui_mysql:
+        condition: service_healthy
+    networks:
+      - huashui_net
+
+# ==========================================================================
+# 网络
+# ==========================================================================
+networks:
+  huashui_net:
+    name: huashui_net
+    driver: bridge

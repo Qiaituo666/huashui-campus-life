@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.huashui</groupId>
+        <artifactId>huashui-campus-life</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>huashui-client</artifactId>
+    <packaging>jar</packaging>
+    <name>huashui-client</name>
+    <description>Feign 接口集中管理（被其他模块依赖）</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- common（用于共享 Result、PageResult 等） -->
+        <dependency>
+            <groupId>com.huashui</groupId>
+            <artifactId>huashui-common</artifactId>
+        </dependency>
+    </dependencies>
+</project>
