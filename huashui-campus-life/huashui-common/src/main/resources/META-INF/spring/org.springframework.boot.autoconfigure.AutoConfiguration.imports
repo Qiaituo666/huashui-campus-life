@@ -1,4 +1,5 @@
 com.huashui.common.config.RedisConfig
 com.huashui.common.config.JacksonConfig
 com.huashui.common.config.SaTokenConfig
+com.huashui.common.config.SwaggerConfig
 com.huashui.common.exception.GlobalExceptionHandler

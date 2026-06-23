@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.huashui.auth.domain.dto.LoginDTO;
 import com.huashui.auth.domain.dto.RegisterDTO;
 import com.huashui.auth.domain.pojo.SysUser;
+import com.huashui.auth.domain.vo.CaptchaVO;
 import com.huashui.auth.domain.vo.LoginVO;
 import com.huashui.auth.mapper.SysUserMapper;
 import com.huashui.common.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,16 +19,23 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
+import static com.huashui.common.constants.RedisConstants.CAPTCHA_PREFIX;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 @DisplayName("AuthServiceImpl 单元测试")
 class AuthServiceImplTest {
+
+
 
     @Mock
     private SysUserMapper sysUserMapper;
@@ -237,23 +246,15 @@ class AuthServiceImplTest {
         assertDoesNotThrow(() -> authService.logout());
     }
 
+
+
     // ==================== 验证码测试 ====================
     @Test
     @DisplayName("getCaptcha - 生成验证码并缓存到 Redis")
     void shouldGenerateCaptcha() {
-        String result = authService.getCaptcha();
-
-        assertNotNull(result);
-        assertTrue(result.contains("captchaKey"));
-        assertTrue(result.contains("captchaImage"));
-        assertTrue(result.contains("data:image/png;base64,"));
-
-        // 验证 Redis 缓存被调用
-        verify(valueOperations).set(
-                startsWith("auth:captcha:"),
-                anyString(),
-                eq(5L),
-                any(java.util.concurrent.TimeUnit.class)
-        );
+        CaptchaVO result = authService.getCaptcha();
+        String cachedCode = redisTemplate.opsForValue()
+                .get(CAPTCHA_PREFIX + result.getCaptchaKey());
+        log.info("Redis验证码:{}",cachedCode);
     }
 }

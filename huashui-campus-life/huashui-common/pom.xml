@@ -67,6 +67,13 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- Knife4j (可选：只有需要 API 文档的业务模块才引入) -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- Servlet API（全局异常处理依赖） -->
         <dependency>
             <groupId>jakarta.servlet</groupId>

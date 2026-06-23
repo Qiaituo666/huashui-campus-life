@@ -15,11 +15,13 @@ import com.huashui.auth.domain.vo.LoginVO;
 import com.huashui.auth.mapper.SysUserMapper;
 import com.huashui.auth.service.IAuthService;
 import com.huashui.common.exception.BusinessException;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
@@ -34,10 +36,21 @@ public class AuthServiceImpl implements IAuthService {
     private static final String CAPTCHA_PREFIX = "auth:captcha:";
     private static final long CAPTCHA_EXPIRE = 5; // 分钟
 
+
+
+    @PostConstruct
+    public void verify() {
+        redisTemplate.opsForValue().set("startup:check", "ok", Duration.ofSeconds(30));
+        String value = redisTemplate.opsForValue().get("startup:check");
+        System.out.println("Redis 连接验证结果: " + value);
+    }
+
+
     @Override
     public LoginVO login(LoginDTO dto) {
         // 1. 验证码校验
         if (StrUtil.isNotBlank(dto.getCaptchaKey())) {
+            //获取缓存里的验证码
             String cachedCode = redisTemplate.opsForValue()
                     .get(CAPTCHA_PREFIX + dto.getCaptchaKey());
             if (StrUtil.isBlank(cachedCode)) {
@@ -46,6 +59,7 @@ public class AuthServiceImpl implements IAuthService {
             if (!cachedCode.equalsIgnoreCase(dto.getCaptchaCode())) {
                 throw new BusinessException("验证码错误");
             }
+            //获取后删除验证码
             redisTemplate.delete(CAPTCHA_PREFIX + dto.getCaptchaKey());
         }
 
@@ -61,7 +75,7 @@ public class AuthServiceImpl implements IAuthService {
             throw new BusinessException("账号已被冻结，请联系管理员");
         }
 
-        // 3. 验证密码
+        // 3. 验证密码 BCrypt加密存储
         if (!BCrypt.checkpw(dto.getPassword(), user.getPassword())) {
             throw new BusinessException("用户名或密码错误");
         }
@@ -121,6 +135,7 @@ public class AuthServiceImpl implements IAuthService {
         // 生成 4 位数字验证码
         LineCaptcha captcha = CaptchaUtil.createLineCaptcha(120, 40, 4, 50);
         String code = captcha.getCode();
+        log.info("{},获取验证码:{}",LocalDateTime.now(),code);
         String key = IdUtil.fastSimpleUUID();
 
         // 存 Redis，5 分钟过期
