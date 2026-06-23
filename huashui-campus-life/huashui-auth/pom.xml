@@ -8,9 +8,10 @@
         <artifactId>huashui-campus-life</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>huashui-auth</artifactId>
     <name>huashui-auth</name>
-    <description>认证中心：登录、注销、验证码、Token 管理</description>
+    <description>认证中心：登录、注册、注销、验证码、Token 管理</description>
 
     <dependencies>
         <dependency>
@@ -50,13 +51,23 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
-        <!-- common -->
+        <!-- OpenFeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- 内部模块 -->
         <dependency>
             <groupId>com.huashui</groupId>
             <artifactId>huashui-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.huashui</groupId>
+            <artifactId>huashui-client</artifactId>
+        </dependency>
 
-        <!-- Knife4j -->
+        <!-- Knife4j (OpenAPI 3) -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
@@ -67,6 +78,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

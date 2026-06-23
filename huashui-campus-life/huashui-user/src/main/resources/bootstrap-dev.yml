@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: 43.143.130.165:8848
+      discovery:
+        namespace: f923fb34-cb0a-4c06-8fca-ad61ea61a3f0
+        group: DEFAULT_GROUP
+        ip: 43.143.130.165
+logging:
+  level:
+    com.huashui: debug

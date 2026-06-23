@@ -1,0 +1,4 @@
+
+logging:
+  level:
+    com.huashui: debug #控制本地开发行为

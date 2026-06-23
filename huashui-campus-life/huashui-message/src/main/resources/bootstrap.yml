@@ -1,0 +1,62 @@
+server:
+  port: 8086
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: huashui-message
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        shared-configs:
+          - data-id: shared-spring.yaml
+            refresh: false
+          - data-id: shared-redis.yaml
+            refresh: false
+          - data-id: shared-mybatis.yaml
+            refresh: false
+          - data-id: shared-logs.yaml
+            refresh: false
+          - data-id: shared-mq.yaml
+            refresh: false
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/huashui?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: ${MYSQL_PASSWORD:123456}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: true
+          max-attempts: 3
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+hs:
+  swagger:
+    enable: true
+    enableResponseWrap: true
+    package-path: com.huashui.message.controller
+    title: 华水校园生活 - 消息中心接口文档
+    description: 该服务包含消息通知、站内信功能
+    contact-name: 华北水利水电大学.信息工程学院
+    version: v1.0
+  jdbc:
+    database: huashui_campus_life
+  auth:
+    resource:
+      enable: true

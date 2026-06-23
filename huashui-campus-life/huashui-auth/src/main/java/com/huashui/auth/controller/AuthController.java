@@ -1,30 +1,48 @@
 package com.huashui.auth.controller;
 
+import com.huashui.auth.domain.dto.LoginDTO;
+import com.huashui.auth.domain.dto.RegisterDTO;
+import com.huashui.auth.domain.vo.CaptchaVO;
+import com.huashui.auth.domain.vo.LoginVO;
+import com.huashui.auth.service.IAuthService;
 import com.huashui.common.response.Result;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 认证接口
- */
+@Tag(name = "认证中心", description = "登录、注册、注销、验证码")
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
+    private final IAuthService authService;
+
+    @Operation(summary = "账号密码登录")
     @PostMapping("/login")
-    public Result<String> login(@RequestParam String username, @RequestParam String password) {
-        // TODO: 实现登录逻辑
-        return Result.ok("login stub");
+    public Result<LoginVO> login(@Valid @RequestBody LoginDTO dto) {
+        return Result.ok(authService.login(dto));
     }
 
-    @PostMapping("/logout")
-    public Result<Void> logout() {
-        // TODO: 实现注销逻辑
+    @Operation(summary = "学生注册")
+    @PostMapping("/register")
+    public Result<Void> register(@Valid @RequestBody RegisterDTO dto) {
+        authService.register(dto);
         return Result.ok();
     }
 
+    @Operation(summary = "退出登录")
+    @PostMapping("/logout")
+    public Result<Void> logout() {
+        authService.logout();
+        return Result.ok();
+    }
+
+    @Operation(summary = "获取图形验证码")
     @GetMapping("/captcha")
-    public Result<String> captcha() {
-        // TODO: 生成图形验证码
-        return Result.ok("captcha stub");
+    public CaptchaVO getCaptcha() {
+        return authService.getCaptcha();
     }
 }

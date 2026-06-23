@@ -2,55 +2,54 @@ server:
   port: 8080
 
 spring:
+  profiles:
+    active: dev
   application:
     name: huashui-gateway
   cloud:
     nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: ${NACOS_NAMESPACE:}
       config:
-        server-addr: 127.0.0.1:8848
-        file-extension: yml
+        file-extension: yaml
+        shared-configs:
+          - data-id: shared-spring.yaml
+            refresh: false
+          - data-id: shared-redis.yaml
+            refresh: false
+          - data-id: shared-logs.yaml
+            refresh: false
+          - data-id: shared-gateway.yaml
+            refresh: false
     gateway:
       routes:
-        # Auth
         - id: huashui-auth
           uri: lb://huashui-auth
           predicates:
             - Path=/auth/**
-        # User
         - id: huashui-user
           uri: lb://huashui-user
           predicates:
             - Path=/user/**
-        # Dormitory
         - id: huashui-dormitory
           uri: lb://huashui-dormitory
           predicates:
             - Path=/dormitory/**
-        # Utility
         - id: huashui-utility
           uri: lb://huashui-utility
           predicates:
             - Path=/utility/**
-        # Attendance
         - id: huashui-attendance
           uri: lb://huashui-attendance
           predicates:
             - Path=/attendance/**
-        # File
         - id: huashui-file
           uri: lb://huashui-file
           predicates:
             - Path=/file/**
-        # System
         - id: huashui-system
           uri: lb://huashui-system
           predicates:
             - Path=/system/**
 
-############## Sa-Token ##############
 sa-token:
   token-name: Authorization
   timeout: 2592000
@@ -59,6 +58,13 @@ sa-token:
   is-share: false
   token-style: tik
   is-log: false
+
+hs:
+  swagger:
+    enable: false
+  auth:
+    resource:
+      enable: true
 
 logging:
   level:
