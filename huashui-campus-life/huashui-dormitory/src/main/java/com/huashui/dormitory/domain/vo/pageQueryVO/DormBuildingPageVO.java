@@ -1,5 +1,6 @@
-package com.huashui.dormitory.domain.vo;
+package com.huashui.dormitory.domain.vo.pageQueryVO;
 
+import com.huashui.dormitory.enums.RoomType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -29,7 +30,7 @@ public class DormBuildingPageVO implements Serializable {
     private String buildingCode;
 
     @Schema(description = "房型 FOUR/SIX")
-    private String roomType;
+    private RoomType roomType;
 
     @Schema(description = "总层数")
     private Integer totalFloors;

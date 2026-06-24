@@ -67,7 +67,7 @@ public class myDormitoryInfoVO implements Serializable {
         private Integer floorNumber;
 
         @Schema(description = "房型")
-        private String roomType;
+        private RoomInfo roomType;
 
         @Schema(description = "总床位数")
         private Integer totalBeds;

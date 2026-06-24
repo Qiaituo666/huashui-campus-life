@@ -1,4 +1,4 @@
-package com.huashui.dormitory.domain.dto;
+package com.huashui.dormitory.domain.dto.pageQuery;
 
 import com.huashui.common.domain.dto.PageQuery;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,7 +32,8 @@ public class DormBuildingPageDTO extends PageQuery {
     @Schema(description = "是否标准化宿舍：0-否，1-是")
     private Integer isStandardized;
 
-    @Schema(description = "所在城市")  // 只有郑州和信阳 前端写死用户选择
+    @Schema(description = "所在城市")  // 查询所有城市为下拉菜单供用户选择
+
     private String  location;
 
 }

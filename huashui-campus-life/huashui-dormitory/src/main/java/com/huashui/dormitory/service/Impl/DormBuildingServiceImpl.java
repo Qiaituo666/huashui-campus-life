@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.huashui.common.domain.vo.PageVO;
 import com.huashui.common.response.Result;
-import com.huashui.dormitory.domain.dto.DormBuildingPageDTO;
+import com.huashui.dormitory.domain.dto.pageQuery.DormBuildingPageDTO;
 import com.huashui.dormitory.domain.pojo.DormBuilding;
 import com.huashui.dormitory.domain.vo.DormBuildingDetailVO;
-import com.huashui.dormitory.domain.vo.DormBuildingPageVO;
+import com.huashui.dormitory.domain.vo.pageQueryVO.DormBuildingPageVO;
 import com.huashui.dormitory.mapper.DormBuildingMapper;
 import com.huashui.dormitory.service.DormBuildingService;
 import org.springframework.stereotype.Service;

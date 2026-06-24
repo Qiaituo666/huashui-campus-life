@@ -1,11 +1,13 @@
 package com.huashui.dormitory.domain.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.huashui.dormitory.enums.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.lang.reflect.WildcardType;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,22 +26,22 @@ public class DormBuildingConfig implements Serializable {
     private Boolean hasPrivateBath;
 
     @Schema(description = "卫浴类型")
-    private String bathType;
+    private BathType bathType;
 
     @Schema(description = "是否有阳台")
     private Boolean hasBalcony;
 
     @Schema(description = "阳台类型")
-    private String balconyType;
+    private BalconyType balconyType;
 
     @Schema(description = "床铺类型")
-    private String bedType;
+    private BedType bedType;
 
     @Schema(description = "地面材质")
-    private String floorType;
+    private FloorType floorType;
 
     @Schema(description = "热水供应类型")
-    private String hotWaterType;
+    private HotWaterType hotWaterType;
 
     @Schema(description = "热水供应时段")
     private String hotWaterHours;
@@ -63,8 +65,10 @@ public class DormBuildingConfig implements Serializable {
     private String bedSize;
 
     @Schema(description = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @Schema(description = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 }

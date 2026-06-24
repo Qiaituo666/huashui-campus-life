@@ -1,5 +1,6 @@
 package com.huashui.dormitory.domain.vo;
 
+import com.huashui.dormitory.enums.RepairOrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -36,7 +37,7 @@ public class RepairOrderVO implements Serializable {
     private String appointmentTime;
 
     @Schema(description = "工单状态")
-    private String status;
+    private RepairOrderStatus status;
 
     @Schema(description = "工单状态名称")
     private String statusName;

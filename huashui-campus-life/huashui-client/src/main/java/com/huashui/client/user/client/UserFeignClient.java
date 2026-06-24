@@ -14,7 +14,7 @@ public interface UserFeignClient {
 
     /** 获取单个用户基本信息 */
     @GetMapping("/users/{id}")
-    Result<UserSimpleVO> getUserById(@PathVariable Long id);
+    Result<UserSimpleVO> getUserById(@PathVariable("id") Long id);
 
     /** 批量获取用户信息 */
     @GetMapping("/users/batch")
@@ -22,5 +22,5 @@ public interface UserFeignClient {
 
     /** 校验用户是否存在 */
     @GetMapping("/users/{id}/exists")
-    Result<Boolean> userExists(@PathVariable Long id);
+    Result<Boolean> userExists(@PathVariable("id") Long id);
 }

@@ -1,6 +1,7 @@
 package com.huashui.dormitory.domain.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.huashui.dormitory.enums.RoomType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -31,7 +32,7 @@ public class DormBuilding implements Serializable {
     private String buildingCode;
 
     @Schema(description = "房型")
-    private String roomType;
+    private RoomType roomType;
 
     @Schema(description = "总层数")
     private Integer totalFloors;
@@ -52,9 +53,11 @@ public class DormBuilding implements Serializable {
     private Boolean status;
 
     @Schema(description = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @Schema(description = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @TableLogic
