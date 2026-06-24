@@ -1,0 +1,58 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: huashui-auth
+
+  profiles:
+    active: dev
+
+  cloud:
+    nacos:
+      server-addr: 43.143.130.165:8848
+      username: nacos
+      password: nacos
+
+      config:
+        namespace: 02c193c2-fbeb-4fe9-9196-2e55de4730c8
+        group: DEFAULT_GROUP
+        file-extension: yaml
+
+      discovery:
+        namespace: 02c193c2-fbeb-4fe9-9196-2e55de4730c8
+
+  config:
+    import:
+      - optional:nacos:shared-spring.yaml
+      - optional:nacos:shared-redis.yaml
+      - optional:nacos:shared-mybatis.yaml
+      - optional:nacos:shared-logs.yaml
+      - optional:nacos:shared-feign.yaml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+sa-token:
+  token-name: Authorization  # token 名称（同时也是 cookie 名称）
+  timeout: 2592000  # token 有效期（秒），-1 代表永久
+  active-timeout: -1  # token 最低活跃频率
+  is-concurrent: true # 是否允许同一账号并发登录
+  is-share: false # 多人登录是否共用一个 token
+  token-style: tik # token 风格
+  is-log: true # 是否输出操作日志
+
+hs:
+  swagger:
+    enable: true
+    enableResponseWrap: true
+    package-path: com.huashui.auth.controller
+    title: 华水校园生活 - 考勤中心接口文档
+    description: 该服务包含考勤管理 — 课程管理、发起签到、学生签到、请假审批、出勤统计
+    contact-name: 华北水利水电大学.信息工程学院
+    version: v1.0
+
+  jdbc:
+    database: huashui_campus_life
+
+  auth:
+    resource:
+      enable: true

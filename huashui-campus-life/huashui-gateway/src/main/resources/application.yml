@@ -2,23 +2,35 @@ server:
   port: 8080
 
 spring:
-  profiles:
-    active: dev
   application:
     name: huashui-gateway
+
+  profiles:
+    active: dev
+
   cloud:
     nacos:
+      server-addr: 43.143.130.165:8848
+      username: nacos
+      password: nacos
+
       config:
+        namespace: f923fb34-cb0a-4c06-8fca-ad61ea61a3f0
+        group: DEFAULT_GROUP
         file-extension: yaml
-        shared-configs:
-          - data-id: shared-spring.yaml
-            refresh: false
-          - data-id: shared-redis.yaml
-            refresh: false
-          - data-id: shared-logs.yaml
-            refresh: false
-          - data-id: shared-gateway.yaml
-            refresh: false
+
+      discovery:
+        namespace: f923fb34-cb0a-4c06-8fca-ad61ea61a3f0
+
+  config:
+    import:
+      - optional:nacos:shared-spring.yaml
+      - optional:nacos:shared-redis.yaml
+      - optional:nacos:shared-logs.yaml
+      - optional:nacos:shared-gateway.yaml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+  cloud:
     gateway:
       routes:
         - id: huashui-auth
@@ -60,12 +72,6 @@ sa-token:
   is-log: false
 
 hs:
-  swagger:
-    enable: false
   auth:
     resource:
       enable: true
-
-logging:
-  level:
-    com.huashui.gateway: debug

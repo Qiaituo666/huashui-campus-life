@@ -24,5 +24,16 @@
             <groupId>com.huashui</groupId>
             <artifactId>huashui-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
+            <version>2.2.47</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -31,7 +31,9 @@ $RECYCLE.BIN/
 
 # ---- Docker ----
 docker/*/data/
-docker/*/data/*
+# Keep init SQL scripts
+!docker/*/init/
+!docker/*/init/*
 
 # ---- Environment & Secrets ----
 .env
@@ -39,6 +41,8 @@ docker/*/data/*
 .env.*.local
 *.log
 *.log.*
+application-local.yml
+application-local.yaml
 
 # ---- Frontend (Vue/React) ----
 node_modules/

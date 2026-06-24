@@ -52,6 +52,10 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.huashui</groupId>
+            <artifactId>huashui-client</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
