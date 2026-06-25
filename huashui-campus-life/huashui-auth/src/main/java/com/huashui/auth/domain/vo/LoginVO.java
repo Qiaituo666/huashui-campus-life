@@ -1,5 +1,6 @@
 package com.huashui.auth.domain.vo;
 
+import com.huashui.auth.menu.RoleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class LoginVO {
     private String realName;
 
     @Schema(description = "用户类型")
-    private String userType;
+    private RoleCode userType;
 
     @Schema(description = "头像URL")
     private String avatar;

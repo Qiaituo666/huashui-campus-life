@@ -13,6 +13,7 @@ import com.huashui.auth.domain.pojo.SysUser;
 import com.huashui.auth.domain.vo.CaptchaVO;
 import com.huashui.auth.domain.vo.LoginVO;
 import com.huashui.auth.mapper.SysUserMapper;
+import com.huashui.auth.menu.RoleCode;
 import com.huashui.auth.service.IAuthService;
 import com.huashui.common.exception.BusinessException;
 import jakarta.annotation.PostConstruct;
@@ -88,6 +89,7 @@ public class AuthServiceImpl implements IAuthService {
         sysUserMapper.updateById(user);
 
         // 6. 返回
+
         return LoginVO.builder()
                 .token(StpUtil.getTokenValue())
                 .userId(user.getId())
@@ -118,7 +120,7 @@ public class AuthServiceImpl implements IAuthService {
         user.setCollegeId(dto.getCollegeId());
         user.setMajor(dto.getMajor());
         user.setGrade(dto.getGrade());
-        user.setUserType("STUDENT");
+        user.setUserType(RoleCode.STUDENT);
         user.setStatus(true);
 
         sysUserMapper.insert(user);
@@ -146,8 +148,8 @@ public class AuthServiceImpl implements IAuthService {
                 TimeUnit.MINUTES
         );
 
-        // base64 图片
-        String imageBase64 = "data:image/png;base64," + captcha.getImageBase64Data();
+        // base64 图片（Hutool getImageBase64Data 已含 data:image/png;base64, 前缀）
+        String imageBase64 = captcha.getImageBase64Data();
 
         return new CaptchaVO(key, imageBase64);
     }

@@ -1,6 +1,7 @@
 package com.huashui.auth.domain.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.huashui.auth.menu.PermissionType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,7 @@ public class SysPermission implements Serializable {
     private String permissionName;
 
     @Schema(description = "权限编码（例：user:view, room:assign）")
-    private String permissionCode;
+    private PermissionType permissionCode;
 
     @Schema(description = "父权限ID（0表示顶级）")
     private Long parentId;

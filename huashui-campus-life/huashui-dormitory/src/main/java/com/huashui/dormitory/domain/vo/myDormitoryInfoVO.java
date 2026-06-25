@@ -66,8 +66,8 @@ public class myDormitoryInfoVO implements Serializable {
         @Schema(description = "楼层")
         private Integer floorNumber;
 
-        @Schema(description = "房型")
-        private RoomInfo roomType;
+        @Schema(description = "房型（四人间/六人间）")
+        private String roomType;
 
         @Schema(description = "总床位数")
         private Integer totalBeds;
@@ -84,18 +84,13 @@ public class myDormitoryInfoVO implements Serializable {
     @Schema(name = "RoomMateInfo", description = "室友信息")
     public static class RoomMateInfo {
 
-
-
         @Schema(description = "姓名")
         private String realName;
 
         @Schema(description = "头像URL")
         private String avatar;
 
-
         @Schema(description = "床位号")
         private String bedNumber;
-
-
     }
 }

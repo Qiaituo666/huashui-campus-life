@@ -1,8 +1,8 @@
 package com.huashui.common.exception;
 
 import com.huashui.common.response.Result;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,21 +11,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-/**
- * 全局异常处理
- */
 @Slf4j
 @RestControllerAdvice
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class GlobalExceptionHandler {
 
-    /** 业务异常 */
     @ExceptionHandler(BusinessException.class)
-    public Result<Void> handleBusiness(BusinessException e, HttpServletRequest request) {
-        log.warn("[业务异常] {} {} -> {}", request.getMethod(), request.getRequestURI(), e.getMessage());
+    public Result<Void> handleBusiness(BusinessException e) {
+        log.warn("[业务异常] {}", e.getMessage());
         return Result.fail(e.getCode(), e.getMessage());
     }
 
-    /** 参数校验异常（@Valid） */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Void> handleValid(MethodArgumentNotValidException e) {
@@ -36,7 +32,6 @@ public class GlobalExceptionHandler {
         return Result.badRequest(msg);
     }
 
-    /** 参数绑定异常 */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Void> handleBind(BindException e) {
@@ -47,17 +42,15 @@ public class GlobalExceptionHandler {
         return Result.badRequest(msg);
     }
 
-    /** 兜底 */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Result<Void> handleUnknown(Exception e, HttpServletRequest request) {
-        log.error("[系统异常] {} {}", request.getMethod(), request.getRequestURI(), e);
+    public Result<Void> handleUnknown(Exception e) {
+        log.error("[系统异常]", e);
         return Result.fail("服务器内部错误，请稍后再试");
     }
 
-    //解决图标日志报错问题
     @ExceptionHandler(NoResourceFoundException.class)
-    public void handleNoResource(NoResourceFoundException e){
-        // 不处理，不记录日志
+    public void handleNoResource(NoResourceFoundException e) {
+        // 图标等静态资源 404 不记录日志
     }
 }

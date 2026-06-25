@@ -1,6 +1,7 @@
 package com.huashui.auth.domain.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.huashui.auth.menu.RoleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,7 @@ public class SysRole implements Serializable {
     private String roleName;
 
     @Schema(description = "角色编码：STUDENT/CLEANER/DORM_MANAGER/SUPER_ADMIN")
-    private String roleCode;
+    private RoleCode roleCode;
 
     @Schema(description = "角色描述")
     private String description;

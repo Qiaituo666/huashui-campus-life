@@ -45,4 +45,7 @@ public class AuthController {
     public CaptchaVO getCaptcha() {
         return authService.getCaptcha();
     }
+
+
+    // todo 根据角色Id查询权限列表
 }

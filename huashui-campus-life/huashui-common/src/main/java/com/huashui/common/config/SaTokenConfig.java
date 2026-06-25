@@ -2,16 +2,13 @@ package com.huashui.common.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * Sa-Token 路由拦截配置
- * <p>
- * 各业务模块可通过 excludePathPatterns 放行自己的公开接口。
- */
 @Configuration
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class SaTokenConfig implements WebMvcConfigurer {
 
     @Override

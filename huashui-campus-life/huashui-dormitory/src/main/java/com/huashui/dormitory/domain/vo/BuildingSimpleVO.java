@@ -13,14 +13,14 @@ public class BuildingSimpleVO implements Serializable {
     private Long id;
 
     @Schema(description = "所属校区ID（关联sys_campus.id）")
-    private Long campus_id;
+    private Long campusId;
 
     @Schema(description = "片区分组")
     private String area;
 
     @Schema(description = "楼栋名称")
-    private String building_name;
+    private String buildingName;
 
     @Schema(description = "楼栋编码")
-    private String building_code;
+    private String buildingCode;
 }

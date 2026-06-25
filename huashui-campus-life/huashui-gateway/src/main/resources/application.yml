@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  web-application-type: reactive
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: huashui-gateway
 
@@ -15,22 +18,13 @@ spring:
       password: nacos
 
       config:
-        namespace: f923fb34-cb0a-4c06-8fca-ad61ea61a3f0
+        namespace: 02c193c2-fbeb-4fe9-9196-2e55de4730c8
         group: DEFAULT_GROUP
         file-extension: yaml
 
       discovery:
-        namespace: f923fb34-cb0a-4c06-8fca-ad61ea61a3f0
+        namespace: 02c193c2-fbeb-4fe9-9196-2e55de4730c8
 
-  config:
-    import:
-      - optional:nacos:shared-spring.yaml
-      - optional:nacos:shared-redis.yaml
-      - optional:nacos:shared-logs.yaml
-      - optional:nacos:shared-gateway.yaml
-      - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-
-  cloud:
     gateway:
       routes:
         - id: huashui-auth
@@ -61,6 +55,14 @@ spring:
           uri: lb://huashui-system
           predicates:
             - Path=/system/**
+
+  config:
+    import:
+      - optional:nacos:shared-spring.yaml
+      - optional:nacos:shared-redis.yaml
+      - optional:nacos:shared-logs.yaml
+      - optional:nacos:shared-gateway.yaml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
 
 sa-token:
   token-name: Authorization

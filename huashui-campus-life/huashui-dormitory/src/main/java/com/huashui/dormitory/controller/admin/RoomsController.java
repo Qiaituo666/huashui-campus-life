@@ -1,49 +1,65 @@
 package com.huashui.dormitory.controller.admin;
 
+import com.huashui.common.domain.vo.PageVO;
+import com.huashui.common.response.Result;
+import com.huashui.dormitory.domain.dto.BatchGenerateDTO;
+import com.huashui.dormitory.domain.dto.RoomCreateDTO;
+import com.huashui.dormitory.domain.dto.RoomUpdateDTO;
 import com.huashui.dormitory.domain.dto.pageQuery.RoomPageDTO;
+import com.huashui.dormitory.domain.vo.RoomDetailVO;
+import com.huashui.dormitory.domain.vo.pageQueryVO.RoomPageVO;
+import com.huashui.dormitory.service.DormRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author
+ * 房间管理
  */
-
 @Tag(name = "房间管理")
 @RestController
 @RequestMapping("/dormitory/admin/rooms")
+@RequiredArgsConstructor
 public class RoomsController {
 
-    @Operation(summary = "房间分页列表,必须提供楼栋Id和所在楼层")
+    private final DormRoomService roomService;
+
     @GetMapping
-    public void pageRooms(RoomPageDTO dto) {
-
-        // todo 定义VO
+    @Operation(summary = "房间分页列表，必须提供楼栋Id和所在楼层")
+    public Result<PageVO<RoomPageVO>> pageRooms(RoomPageDTO dto) {
+        return roomService.pageRooms(dto);
     }
 
-    @Operation(summary = "房间详情（含床位分配情况,和每一个学生的详细信息）")
     @GetMapping("/{id}")
-    public void getRoomDetail(@PathVariable Long id) {
-
+    @Operation(summary = "房间详情（含床位分配情况和每一个学生的详细信息）")
+    public Result<RoomDetailVO> getRoomDetail(@PathVariable Long id) {
+        return roomService.getRoomDetail(id);
     }
 
-    @Operation(summary = "新增房间")
     @PostMapping
-    public void createRoom() {
+    @Operation(summary = "新增房间")
+    public Result<Void> createRoom(@RequestBody RoomCreateDTO dto) {
+        return roomService.createRoom(dto);
     }
 
-    @Operation(summary = "编辑房间")
     @PutMapping("/{id}")
-    public void updateRoom(@PathVariable Long id) {
+    @Operation(summary = "编辑房间")
+    public Result<Void> updateRoom(@PathVariable Long id,
+                                   @RequestBody RoomUpdateDTO dto) {
+        return roomService.updateRoom(id, dto);
     }
 
-    @Operation(summary = "删除房间（需检查是否有人入住）")
     @DeleteMapping("/{id}")
-    public void deleteRoom(@PathVariable Long id) {
+    @Operation(summary = "删除房间（需检查是否有人入住）")
+    public Result<Void> deleteRoom(@PathVariable Long id) {
+        return roomService.deleteRoom(id);
     }
 
-    @Operation(summary = "批量生成房间（按楼栋楼层/房间数）")
     @PostMapping("/buildings/{buildingId}/rooms/batch")
-    public void batchGenerateRooms(@PathVariable Long buildingId) {
+    @Operation(summary = "批量生成房间（按楼栋楼层/房间数）")
+    public Result<Void> batchGenerateRooms(@PathVariable Long buildingId,
+                                           @RequestBody BatchGenerateDTO dto) {
+        return roomService.batchGenerateRooms(buildingId, dto);
     }
 }

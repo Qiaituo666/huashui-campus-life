@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
+import com.huashui.user.menu.UserType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
@@ -50,7 +51,7 @@ public class SysUser implements Serializable {
     private Boolean gender;
 
     @Schema(description = "用户类型：STUDENT-学生, CLEANER-保洁, DORM_MANAGER-宿管, SUPER_ADMIN-超级管理员")
-    private String userType;
+    private UserType userType;
 
     @Schema(description = "所属校区ID（超级管理员可为空）")
     private Long campusId;

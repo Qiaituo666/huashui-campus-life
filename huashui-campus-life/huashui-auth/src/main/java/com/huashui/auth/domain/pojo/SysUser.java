@@ -1,6 +1,7 @@
 package com.huashui.auth.domain.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.huashui.auth.menu.RoleCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,7 +45,7 @@ public class SysUser implements Serializable {
     private Boolean gender;
 
     @Schema(description = "用户类型：STUDENT/CLEANER/DORM_MANAGER/SUPER_ADMIN")
-    private String userType;
+    private RoleCode userType;
 
     @Schema(description = "所属校区ID")
     private Long campusId;
