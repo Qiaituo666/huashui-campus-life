@@ -14,7 +14,7 @@ public class FeignConfig {
         return template -> {
             String token = StpUtil.getTokenValue(); // 从sa-token取出token放了请求投头
             if (StrUtil.isNotBlank(token)) {
-                template.header("Authorization", token);
+                template.header("satoken", token);
             }
         };
     }

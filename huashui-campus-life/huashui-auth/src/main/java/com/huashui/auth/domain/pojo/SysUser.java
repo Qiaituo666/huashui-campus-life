@@ -45,7 +45,7 @@ public class SysUser implements Serializable {
     private Boolean gender;
 
     @Schema(description = "用户类型：STUDENT/CLEANER/DORM_MANAGER/SUPER_ADMIN")
-    private RoleCode userType;
+    private String userType;
 
     @Schema(description = "所属校区ID")
     private Long campusId;

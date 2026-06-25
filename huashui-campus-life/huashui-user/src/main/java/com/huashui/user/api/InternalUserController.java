@@ -6,6 +6,7 @@ import com.huashui.common.response.Result;
 import com.huashui.user.domain.pojo.SysUser;
 import com.huashui.user.mapper.SysUserMapper;
 import lombok.RequiredArgsConstructor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user/internal")
 @RequiredArgsConstructor
+@MapperScan("com.huashui.user.mapper")
 public class InternalUserController {
 
     private final SysUserMapper sysUserMapper;

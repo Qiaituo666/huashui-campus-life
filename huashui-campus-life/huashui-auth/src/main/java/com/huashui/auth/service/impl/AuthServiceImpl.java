@@ -13,7 +13,6 @@ import com.huashui.auth.domain.pojo.SysUser;
 import com.huashui.auth.domain.vo.CaptchaVO;
 import com.huashui.auth.domain.vo.LoginVO;
 import com.huashui.auth.mapper.SysUserMapper;
-import com.huashui.auth.menu.RoleCode;
 import com.huashui.auth.service.IAuthService;
 import com.huashui.common.exception.BusinessException;
 import jakarta.annotation.PostConstruct;
@@ -120,7 +119,7 @@ public class AuthServiceImpl implements IAuthService {
         user.setCollegeId(dto.getCollegeId());
         user.setMajor(dto.getMajor());
         user.setGrade(dto.getGrade());
-        user.setUserType(RoleCode.STUDENT);
+        user.setUserType("STUDENT");
         user.setStatus(true);
 
         sysUserMapper.insert(user);
@@ -135,7 +134,7 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public CaptchaVO getCaptcha() {
         // 生成 4 位数字验证码
-        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(120, 40, 4, 50);
+        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(120, 40, 4, 5);
         String code = captcha.getCode();
         log.info("{},获取验证码:{}",LocalDateTime.now(),code);
         String key = IdUtil.fastSimpleUUID();

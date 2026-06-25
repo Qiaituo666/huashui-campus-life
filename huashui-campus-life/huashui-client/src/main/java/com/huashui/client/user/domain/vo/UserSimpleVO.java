@@ -22,7 +22,7 @@ public class UserSimpleVO implements Serializable {
     private String phone;
 
     @Schema(description = "用户类型")
-    private String userType;
+    private com.huashui.common.enums.UserType userType;
 
     @Schema(description = "学院ID")
     private Long collegeId;

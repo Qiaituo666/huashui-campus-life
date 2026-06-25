@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8084
 
 spring:
   application:
-    name: huashui-auth
+    name: huashui-message
 
   profiles:
     active: dev
@@ -30,7 +30,6 @@ spring:
       - optional:nacos:shared-logs.yaml
       - optional:nacos:shared-feign.yaml
       - optional:nacos:shared-sa-token.yaml
-      - optional:nacos:shared-file.yaml
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
 
 
@@ -40,8 +39,8 @@ hs:
     enable: true
     enableResponseWrap: true
     package-path: com.huashui.auth.controller
-    title: 华水校园生活 - 考勤中心接口文档
-    description: 该服务包含考勤管理 — 课程管理、发起签到、学生签到、请假审批、出勤统计
+    title: 华水校园生活 - 信息中心中心接口文档
+    description: 该服务包含 消息中心 — RabbitMQ 消费业务事件 → 生成系统通知 → 用户查看。支持短信/邮件扩展
     contact-name: 华北水利水电大学.信息工程学院
     version: v1.0
 

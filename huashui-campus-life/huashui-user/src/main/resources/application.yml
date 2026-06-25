@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8085
 
 spring:
   application:
-    name: huashui-auth
+    name: huashui-user
 
   profiles:
     active: dev
@@ -29,22 +29,16 @@ spring:
       - optional:nacos:shared-mybatis.yaml
       - optional:nacos:shared-logs.yaml
       - optional:nacos:shared-feign.yaml
+      - optional:nacos:shared-sa-token.yaml
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
 
-sa-token:
-  token-name: Authorization  # token 名称（同时也是 cookie 名称）
-  timeout: 2592000  # token 有效期（秒），-1 代表永久
-  active-timeout: -1  # token 最低活跃频率
-  is-concurrent: true # 是否允许同一账号并发登录
-  is-share: false # 多人登录是否共用一个 token
-  token-style: tik # token 风格
-  is-log: true # 是否输出操作日志
+
 
 hs:
   swagger:
     enable: true
     enableResponseWrap: true
-    package-path: com.huashui.auth.controller
+    package-path: com.huashui.user.controller
     title: 华水校园生活 - 用户中心接口文档
     description: 该服务包含用户中心 — 用户管理、角色管理、权限管理
     contact-name: 华北水利水电大学.信息工程学院

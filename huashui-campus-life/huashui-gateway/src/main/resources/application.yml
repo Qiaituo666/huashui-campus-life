@@ -62,16 +62,10 @@ spring:
       - optional:nacos:shared-redis.yaml
       - optional:nacos:shared-logs.yaml
       - optional:nacos:shared-gateway.yaml
+      - optional:nacos:shared-sa-token.yaml
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
 
-sa-token:
-  token-name: Authorization
-  timeout: 2592000
-  active-timeout: -1
-  is-concurrent: true
-  is-share: false
-  token-style: tik
-  is-log: false
+
 
 hs:
   auth:

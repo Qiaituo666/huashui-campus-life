@@ -13,10 +13,10 @@ import reactor.core.publisher.Mono;
 import java.util.Set;
 
 /**
- * 全局鉴权过滤器
+ * 网关访问日志过滤器（仅记录日志，鉴权已由 SaReactorFilter 接管）
  */
 @Slf4j
-@Component
+// @Component  ← 暂时停用，鉴权由 SaReactorFilter 统一处理
 public class AuthFilter implements GlobalFilter, Ordered {
 
     /** 白名单路径 */
