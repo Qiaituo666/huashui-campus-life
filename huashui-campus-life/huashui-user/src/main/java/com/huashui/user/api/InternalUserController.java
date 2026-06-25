@@ -47,7 +47,7 @@ public class InternalUserController {
         vo.setUsername(u.getUsername());
         vo.setRealName(u.getRealName());
         vo.setPhone(u.getPhone());
-        vo.setUserType(u.getUserType());
+        vo.setUserType(u.getUserType().name());
         vo.setCollegeId(u.getCollegeId());
         vo.setAvatar(u.getAvatar());
         return vo;

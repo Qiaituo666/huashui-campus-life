@@ -17,7 +17,7 @@ OUTPUT_FILE = "03_huashui_campus_life_test_data.sql"
 NOW = datetime.datetime(2026, 6, 22, 10, 0, 0)
 
 # BCrypt hash for password "123456" (all test users use same password)
-BCRYPT_PASSWORD = "$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5Eh"
+BCRYPT_PASSWORD = "$2a$10$ESbcbvbGCllv0d26o.OfI.K6t/D7bbDDWHr1cyk348o83UyDJ/9FC"
 
 # ============================================================
 # 华水实际学院列表
