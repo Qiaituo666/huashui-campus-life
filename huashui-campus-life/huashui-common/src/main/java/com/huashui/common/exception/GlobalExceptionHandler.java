@@ -1,5 +1,6 @@
 package com.huashui.common.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import com.huashui.common.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -20,6 +21,12 @@ public class GlobalExceptionHandler {
     public Result<Void> handleBusiness(BusinessException e) {
         log.warn("[业务异常] {}", e.getMessage());
         return Result.fail(e.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(NotLoginException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Result<Void> handleNotLogin(NotLoginException e) {
+        return Result.unauthorized("请先登录");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

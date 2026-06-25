@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8084
 
 spring:
   application:
-    name: huashui-auth
+    name: huashui-attendance
 
   profiles:
     active: dev
@@ -44,7 +44,7 @@ hs:
   swagger:
     enable: true
     enableResponseWrap: true
-    package-path: com.huashui.auth.controller
+    package-path: com.huashui.attendance.controller
     title: 华水校园生活 - 考勤中心接口文档
     description: 该服务包含考勤管理 — 课程管理、发起签到、学生签到、请假审批、出勤统计
     contact-name: 华北水利水电大学.信息工程学院

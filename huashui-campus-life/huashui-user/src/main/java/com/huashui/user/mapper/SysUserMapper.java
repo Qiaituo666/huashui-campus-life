@@ -2,6 +2,7 @@ package com.huashui.user.mapper;
 
 import com.huashui.user.domain.pojo.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author 陈会闯
  * @since 2026-06-23
  */
+@Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
 }

@@ -5,11 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 /**
@@ -49,7 +52,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
         } catch (Exception e) {
             log.warn("[Gateway] 未登录访问: {}", path);
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
+            exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+            String body = "{\"code\":401,\"message\":\"请先登录\",\"data\":null}";
+            DataBuffer buffer = exchange.getResponse().bufferFactory()
+                    .wrap(body.getBytes(StandardCharsets.UTF_8));
+            return exchange.getResponse().writeWith(Mono.just(buffer));
         }
 
         return chain.filter(exchange);
