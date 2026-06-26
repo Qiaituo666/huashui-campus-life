@@ -6,14 +6,13 @@ import com.huashui.common.exception.BusinessException;
 import com.huashui.common.response.Result;
 import com.huashui.user.domain.dto.RoleFormDTO;
 import com.huashui.user.domain.pojo.SysRole;
-import com.huashui.user.domain.pojo.SysRolePermission;
 import com.huashui.user.domain.pojo.SysUserRole;
 import com.huashui.user.domain.vo.RoleDetailVO;
 import com.huashui.user.domain.vo.RoleVO;
 import com.huashui.user.mapper.SysRoleMapper;
-import com.huashui.user.mapper.SysRolePermissionMapper;
-import com.huashui.user.mapper.SysUserRoleMapper;
+import com.huashui.user.service.ISysRolePermissionService;
 import com.huashui.user.service.ISysRoleService;
+import com.huashui.user.service.ISysUserRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +31,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
-    private final SysRolePermissionMapper rolePermissionMapper;
-    private final SysUserRoleMapper userRoleMapper;
+    private final ISysRolePermissionService rolePermissionService;
+    private final ISysUserRoleService userRoleService;
 
     // ==================== 角色列表 ====================
 
@@ -63,20 +62,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 2. 基础字段 → VO
         RoleDetailVO vo = toDetailVO(role);
 
-        // 3. 查该角色绑定的权限 ID 列表
-        List<Long> permissionIds = rolePermissionMapper.selectList(
-                        new LambdaQueryWrapper<SysRolePermission>()
-                                .eq(SysRolePermission::getRoleId, id))
-                .stream()
-                .map(SysRolePermission::getPermissionId)
-                .collect(Collectors.toList());
+        // 3. 查该角色绑定的权限 ID 列表（通过关联 Service）
+        List<Long> permissionIds = rolePermissionService.getPermissionIdsByRoleId(id);
         vo.setPermissionIds(permissionIds);
 
-        // 4. 统计拥有该角色的用户数
-        long userCount = userRoleMapper.selectCount(
+        // 4. 统计拥有该角色的用户数（通过关联 Service）
+        long userCount = userRoleService.count(
                 new LambdaQueryWrapper<SysUserRole>()
                         .eq(SysUserRole::getRoleId, id));
-        vo.setUserCount((int) userCount);
+        vo.setUserCount(userCount);
 
         return Result.ok(vo);
     }
@@ -127,10 +121,28 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     // ==================== 批量删除 ====================
 
+    /**
+     * 批量删除角色（逻辑删除）。
+     * <p>
+     * 删除前逐一检查每个角色是否仍有用户绑定，
+     * 任一角色有用户在使用则整体拒绝，防止产生孤立关联记录。
+     * </p>
+     */
     @Override
     public Result<Void> deleteRoles(List<Long> ids) {
         if (ids == null || ids.isEmpty()) {
             throw new BusinessException("请选择要删除的角色");
+        }
+        // 检查每个角色下是否仍有用户绑定
+        for (Long id : ids) {
+            long userCount = userRoleService.count(
+                    new LambdaQueryWrapper<SysUserRole>()
+                            .eq(SysUserRole::getRoleId, id));
+            if (userCount > 0) {
+                SysRole role = getById(id);
+                String name = role != null ? role.getRoleName() : id.toString();
+                throw new BusinessException("角色「" + name + "」下还有 " + userCount + " 个用户，无法删除");
+            }
         }
         // 逻辑删除：MyBatis Plus 的 removeByIds 受 @TableLogic 控制
         removeByIds(ids);
@@ -169,7 +181,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         vo.setCreateTime(r.getCreateTime());
         vo.setUpdateTime(r.getUpdateTime());
         vo.setPermissionIds(Collections.emptyList());
-        vo.setUserCount(0);
+        vo.setUserCount(0L);
         return vo;
     }
 }

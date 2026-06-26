@@ -23,7 +23,7 @@ public class RoleDetailVO implements Serializable {
     private List<Long> permissionIds;
 
     @Schema(description = "拥有此角色的用户数")
-    private Integer userCount;
+    private Long userCount;
 
     @Schema(description = "角色ID")
     private Long id;

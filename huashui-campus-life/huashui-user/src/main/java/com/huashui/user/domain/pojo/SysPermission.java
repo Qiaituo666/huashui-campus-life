@@ -10,7 +10,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 角色表 — 系统预置角色（学生/保洁/宿管/超级管理员）。
+ * 权限表 — 系统菜单/按钮/接口权限。
+ * <p>
+ * 树形结构：parentId = 0 为顶级节点，通过 parentId 建立父子关系。
+ * </p>
  *
  * @author 陈会闯
  * @since 2026-06-25
@@ -18,9 +21,9 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_role")
-@Schema(description = "角色表")
-public class SysRole implements Serializable {
+@TableName("sys_permission")
+@Schema(description = "权限表")
+public class SysPermission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,14 +31,26 @@ public class SysRole implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(description = "角色名称")
-    private String roleName;
+    @Schema(description = "权限名称")
+    private String permissionName;
 
-    @Schema(description = "角色编码：STUDENT/CLEANER/DORM_MANAGER/SUPER_ADMIN")
-    private String roleCode;
+    @Schema(description = "权限编码（例：user:view, room:assign）")
+    private String permissionCode;
 
-    @Schema(description = "角色描述")
-    private String description;
+    @Schema(description = "父权限ID（0表示顶级）")
+    private Long parentId;
+
+    @Schema(description = "权限类型：MENU-菜单，BUTTON-按钮，API-接口")
+    private String permType;
+
+    @Schema(description = "前端路由路径")
+    private String path;
+
+    @Schema(description = "前端组件路径")
+    private String component;
+
+    @Schema(description = "菜单图标")
+    private String icon;
 
     @Schema(description = "排序序号")
     private Integer sortOrder;
