@@ -90,7 +90,7 @@ public class adminController {
      * 重新分配用户的角色列表（先清空旧关联，再写入新关联，全量替换）。
      */
     @PutMapping("/{id}/roles")
-    @Operation(summary = "批量分配角色")
+    @Operation(summary = "给用户批量分配角色")
     public Result<Void> assignUserRoles(@PathVariable Long id,
                                         @RequestBody UserRoleAssignDTO dto) {
         return userService.assignUserRoles(id, dto);
