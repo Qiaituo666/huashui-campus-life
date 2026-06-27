@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * 用户表 - 系统所有用户（学生/保洁/宿管/超级管理员） 服务实现类
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-23
  */
 @Service
@@ -295,6 +295,73 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     .collect(Collectors.toList());
             userRoleService.saveBatch(list);
         }
+
+        return Result.ok();
+    }
+
+    // ==================== 修改密码 ====================
+
+    /**
+     * 修改当前登录用户的密码。
+     * <p>
+     * 流程：
+     * <ol>
+     *   <li>校验原密码是否正确（BCrypt 比对）</li>
+     *   <li>新密码 BCrypt 加密</li>
+     *   <li>更新密码和更新时间</li>
+     * </ol>
+     */
+    @Override
+    public Result<Void> updatePassword(Long userId, PasswordUpdateDTO dto) {
+        // 1. 校验用户存在
+        SysUser user = getById(userId);
+        if (user == null) {
+            throw new BusinessException("用户不存在");
+        }
+
+        // 2. 校验原密码是否正确
+        if (!BCrypt.checkpw(dto.getOldPassword(), user.getPassword())) {
+            throw new BusinessException("原密码错误");
+        }
+
+        // 3. 新旧密码不能相同
+        if (dto.getOldPassword().equals(dto.getNewPassword())) {
+            throw new BusinessException("新密码不能与旧密码相同");
+        }
+
+        // 4. 加密新密码并更新
+        LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysUser::getId, userId)
+                .set(SysUser::getPassword, BCrypt.hashpw(dto.getNewPassword()))
+                .set(SysUser::getUpdateTime, LocalDateTime.now());
+        update(wrapper);
+
+        return Result.ok();
+    }
+
+    // ==================== 修改头像 ====================
+
+    /**
+     * 修改当前登录用户的头像。
+     * <p>
+     * 将前端传入的 OSS URL 写入 avatar 字段。
+     * 文件上传由 file 模块的 POST /file/upload 完成，本方法只负责入库。
+     * </p>
+     */
+    @Override
+    public Result<Void> updateAvatar(Long userId, AvatarUpdateDTO dto) {
+        // 1. 校验用户存在
+        SysUser user = getById(userId);
+        if (user == null) {
+            throw new BusinessException("用户不存在");
+        }
+
+        // 2. 更新头像 URL
+        LambdaUpdateWrapper<SysUser> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(SysUser::getId, userId)
+                .set(SysUser::getAvatar, dto.getUrl())
+                .set(SysUser::getUpdateTime, LocalDateTime.now());
+        update(wrapper);
 
         return Result.ok();
     }

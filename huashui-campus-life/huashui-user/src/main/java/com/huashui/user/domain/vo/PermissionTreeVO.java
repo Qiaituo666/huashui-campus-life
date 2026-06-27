@@ -13,7 +13,7 @@ import java.util.List;
  * 通过 children 自嵌套形成树形结构，用于前端渲染菜单/权限树。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

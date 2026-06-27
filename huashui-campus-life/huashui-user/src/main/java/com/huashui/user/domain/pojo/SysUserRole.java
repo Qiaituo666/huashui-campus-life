@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * 用户-角色关联表
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-23
  */
 @Data

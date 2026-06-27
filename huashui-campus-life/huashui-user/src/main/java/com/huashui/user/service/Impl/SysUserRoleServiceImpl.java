@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 用户-角色关联表 服务实现类
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-23
  */
 @Service

@@ -12,7 +12,7 @@ import java.util.List;
  * 提供权限分配和查询能力。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-23
  */
 public interface ISysRolePermissionService extends IService<SysRolePermission> {

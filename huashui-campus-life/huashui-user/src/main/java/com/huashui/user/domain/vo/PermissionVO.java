@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * 树形展示请使用 {@link PermissionTreeVO}。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

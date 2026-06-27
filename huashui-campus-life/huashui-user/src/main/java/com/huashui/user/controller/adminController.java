@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * 所有端点均需管理员权限（由 Sa-Token 全局拦截校验）。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  */
 @Tag(name = "用户管理")
 @RestController

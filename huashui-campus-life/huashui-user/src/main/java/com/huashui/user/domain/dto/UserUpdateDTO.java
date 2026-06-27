@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 所有字段均为可选——传 null 表示不修改该字段，实现部分更新语义。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

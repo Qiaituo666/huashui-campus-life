@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 用户表 - 系统所有用户（学生/保洁/宿管/超级管理员） Mapper 接口
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-23
  */
 @Mapper

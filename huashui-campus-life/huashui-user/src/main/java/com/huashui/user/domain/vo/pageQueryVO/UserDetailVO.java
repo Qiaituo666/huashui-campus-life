@@ -15,7 +15,7 @@ import java.util.List;
  * 用于管理员查看单个用户详情。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

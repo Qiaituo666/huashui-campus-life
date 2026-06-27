@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 密码在后端使用 BCrypt 加密存储，不会明文落库。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

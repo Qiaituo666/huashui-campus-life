@@ -20,7 +20,7 @@ import java.util.List;
  * 给用户分配角色则由 {@code adminController.assignUserRoles()} 负责。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  */
 @Tag(name = "角色管理")
 @RestController

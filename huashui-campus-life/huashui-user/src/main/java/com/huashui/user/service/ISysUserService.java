@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 本接口扩展了管理端所需的业务方法。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-23
  */
 public interface ISysUserService extends IService<SysUser> {
@@ -95,4 +95,27 @@ public interface ISysUserService extends IService<SysUser> {
      * @param dto 新的角色 ID 列表
      */
     Result<Void> assignUserRoles(Long id, UserRoleAssignDTO dto);
+
+    /**
+     * 修改当前登录用户的密码。
+     * <p>
+     * 流程：校验原密码正确 → 新密码 BCrypt 加密 → 更新数据库。
+     * </p>
+     *
+     * @param userId 当前登录用户 ID（从 token 获取）
+     * @param dto    原密码 + 新密码
+     */
+    Result<Void> updatePassword(Long userId, PasswordUpdateDTO dto);
+
+    /**
+     * 修改当前登录用户的头像。
+     * <p>
+     * 将前端传来的 OSS URL 写入 {@code sys_user.avatar} 字段。
+     * 文件上传由 file 模块的 {@code POST /file/upload} 完成。
+     * </p>
+     *
+     * @param userId 当前登录用户 ID（从 token 获取）
+     * @param dto    OSS 返回的头像 URL
+     */
+    Result<Void> updateAvatar(Long userId, AvatarUpdateDTO dto);
 }

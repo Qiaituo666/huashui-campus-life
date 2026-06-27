@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 编辑时所有字段均为可选，roleCode 传了也会被忽略（编码创建后不可改）。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

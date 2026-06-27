@@ -12,7 +12,7 @@ import java.util.List;
  * 只暴露前端需要的字段：角色名、编码、描述等，不暴露 isDeleted 逻辑删除标记。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

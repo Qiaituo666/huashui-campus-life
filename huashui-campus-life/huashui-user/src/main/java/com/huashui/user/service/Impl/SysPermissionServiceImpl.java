@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * 权限表 服务实现类。
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Service

@@ -17,7 +17,7 @@ import java.util.List;
  * 后者只管理角色-权限关联关系，本接口管理权限表的 CRUD。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 public interface ISysPermissionService extends IService<SysPermission> {

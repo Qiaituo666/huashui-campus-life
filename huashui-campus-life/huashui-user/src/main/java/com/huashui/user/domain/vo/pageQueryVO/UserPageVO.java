@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * 不含 password、avatar、updateTime 字段，适合列表场景。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

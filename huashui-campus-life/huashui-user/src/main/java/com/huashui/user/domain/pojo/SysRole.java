@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 /**
  * 角色表 — 系统预置角色（学生/保洁/宿管/超级管理员）。
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

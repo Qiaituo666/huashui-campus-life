@@ -20,7 +20,7 @@ import java.util.List;
  * 将权限分配给角色由角色管理模块负责。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  */
 @Tag(name = "用户权限管理")
 @RestController

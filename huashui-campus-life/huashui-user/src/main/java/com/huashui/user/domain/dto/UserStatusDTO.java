@@ -11,7 +11,7 @@ import java.io.Serializable;
  * status = true → 正常，status = false → 冻结。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

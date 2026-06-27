@@ -13,7 +13,7 @@ import java.util.List;
  * 传空列表表示清空该用户所有角色。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data

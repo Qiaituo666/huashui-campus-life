@@ -35,5 +35,11 @@
             <version>2.2.47</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Feign multipart 文件上传支持 -->
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form-spring</artifactId>
+            <version>4.1.0</version>
+        </dependency>
     </dependencies>
 </project>

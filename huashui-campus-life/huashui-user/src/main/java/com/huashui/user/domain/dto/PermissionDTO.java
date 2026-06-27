@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 编辑时所有字段均可选，permissionCode 创建后不可修改。
  * </p>
  *
- * @author 陈会闯
+ * @author freedom0213
  * @since 2026-06-25
  */
 @Data
