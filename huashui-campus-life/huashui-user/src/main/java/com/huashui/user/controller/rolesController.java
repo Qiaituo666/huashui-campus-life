@@ -7,6 +7,7 @@ import com.huashui.user.domain.vo.RoleVO;
 import com.huashui.user.service.ISysRoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +62,7 @@ public class rolesController {
      */
     @PostMapping
     @Operation(summary = "新增角色")
-    public Result<Void> addRole(@RequestBody RoleFormDTO dto) {
+    public Result<Void> addRole(@Valid @RequestBody RoleFormDTO dto) {
         return roleService.saveRole(null, dto);
     }
 
@@ -74,7 +75,7 @@ public class rolesController {
     @PutMapping("/{id}")
     @Operation(summary = "编辑角色")
     public Result<Void> updateRole(@PathVariable Long id,
-                                   @RequestBody RoleFormDTO dto) {
+                                   @Valid @RequestBody RoleFormDTO dto) {
         return roleService.saveRole(id, dto);
     }
 

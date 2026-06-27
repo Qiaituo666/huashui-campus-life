@@ -8,6 +8,7 @@ import com.huashui.user.domain.vo.PermissionVO;
 import com.huashui.user.service.ISysPermissionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,7 +63,7 @@ public class permissionsController {
      */
     @PostMapping
     @Operation(summary = "新增权限")
-    public Result<Void> addPermission(@RequestBody PermissionDTO dto) {
+    public Result<Void> addPermission(@Valid @RequestBody PermissionDTO dto) {
         return permissionService.savePermission(null, dto);
     }
 
@@ -75,7 +76,7 @@ public class permissionsController {
     @PutMapping("/{id}")
     @Operation(summary = "编辑权限")
     public Result<Void> updatePermission(@PathVariable Long id,
-                                         @RequestBody PermissionDTO dto) {
+                                         @Valid @RequestBody PermissionDTO dto) {
         return permissionService.savePermission(id, dto);
     }
 

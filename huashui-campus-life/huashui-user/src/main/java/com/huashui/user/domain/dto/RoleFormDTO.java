@@ -1,6 +1,7 @@
 package com.huashui.user.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,10 +20,12 @@ import java.io.Serializable;
 @Schema(description = "角色表单DTO（新增/编辑共用）")
 public class RoleFormDTO implements Serializable {
 
-    @Schema(description = "角色名称（新增必填）")
+    @NotBlank(message = "角色名称不能为空")
+    @Schema(description = "角色名称（新增必填）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String roleName;
 
-    @Schema(description = "角色编码：STUDENT/CLEANER/DORM_MANAGER/SUPER_ADMIN（新增必填，编辑忽略）")
+    @NotBlank(message = "角色编码不能为空")
+    @Schema(description = "角色编码：STUDENT/CLEANER/DORM_MANAGER/SUPER_ADMIN（新增必填，编辑忽略）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String roleCode;
 
     @Schema(description = "角色描述")

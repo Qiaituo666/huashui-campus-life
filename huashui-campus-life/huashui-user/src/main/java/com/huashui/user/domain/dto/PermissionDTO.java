@@ -1,6 +1,7 @@
 package com.huashui.user.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,16 +20,19 @@ import java.io.Serializable;
 @Schema(description = "权限表单DTO（新增/编辑共用）")
 public class PermissionDTO implements Serializable {
 
-    @Schema(description = "权限名称（新增必填）")
+    @NotBlank(message = "权限名称不能为空")
+    @Schema(description = "权限名称（新增必填）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String permissionName;
 
-    @Schema(description = "权限编码，例：user:view（新增必填，编辑忽略）")
+    @NotBlank(message = "权限编码不能为空")
+    @Schema(description = "权限编码，例：user:view（新增必填，编辑忽略）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String permissionCode;
 
     @Schema(description = "父权限ID（0表示顶级）")
     private Long parentId;
 
-    @Schema(description = "权限类型：MENU-菜单，BUTTON-按钮，API-接口（新增必填）")
+    @NotBlank(message = "权限类型不能为空")
+    @Schema(description = "权限类型：MENU-菜单，BUTTON-按钮，API-接口（新增必填）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String permType;
 
     @Schema(description = "前端路由路径")

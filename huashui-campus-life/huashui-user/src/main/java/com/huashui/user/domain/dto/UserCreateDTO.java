@@ -2,6 +2,8 @@ package com.huashui.user.domain.dto;
 
 import com.huashui.user.enums.UserType;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,13 +22,16 @@ import java.io.Serializable;
 @Schema(description = "新增用户DTO")
 public class UserCreateDTO implements Serializable {
 
-    @Schema(description = "用户名（必填）")
+    @NotBlank(message = "用户名不能为空")
+    @Schema(description = "用户名（必填）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String username;
 
-    @Schema(description = "密码（必填，BCrypt加密存储）")
+    @NotBlank(message = "密码不能为空")
+    @Schema(description = "密码（必填，BCrypt加密存储）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
 
-    @Schema(description = "真实姓名（必填）")
+    @NotBlank(message = "姓名不能为空")
+    @Schema(description = "真实姓名（必填）", requiredMode = Schema.RequiredMode.REQUIRED)
     private String realName;
 
     @Schema(description = "手机号")
@@ -41,7 +46,8 @@ public class UserCreateDTO implements Serializable {
     @Schema(description = "性别：0-女, 1-男")
     private Boolean gender;
 
-    @Schema(description = "用户类型（必填）")
+    @NotNull(message = "用户类型不能为空")
+    @Schema(description = "用户类型（必填）", requiredMode = Schema.RequiredMode.REQUIRED)
     private UserType userType;
 
     @Schema(description = "所属校区ID")

@@ -1,6 +1,7 @@
 package com.huashui.user.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @Schema(description = "用户状态DTO")
 public class UserStatusDTO implements Serializable {
 
-    @Schema(description = "账号状态：0-冻结, 1-正常")
+    @NotNull(message = "状态不能为空")
+    @Schema(description = "账号状态：0-冻结, 1-正常", requiredMode = Schema.RequiredMode.REQUIRED)
     private Boolean status;
 }

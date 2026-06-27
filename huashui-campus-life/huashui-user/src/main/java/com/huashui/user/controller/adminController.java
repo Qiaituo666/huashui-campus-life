@@ -9,6 +9,7 @@ import com.huashui.user.domain.vo.pageQueryVO.UserPageVO;
 import com.huashui.user.service.ISysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,7 +53,7 @@ public class adminController {
      */
     @PostMapping
     @Operation(summary = "新增用户（管理员创建）")
-    public Result<Void> createUser(@RequestBody UserCreateDTO dto) {
+    public Result<Void> createUser(@Valid @RequestBody UserCreateDTO dto) {
         return userService.createUser(dto);
     }
 
@@ -63,7 +64,7 @@ public class adminController {
     @PutMapping("/{id}")
     @Operation(summary = "编辑用户")
     public Result<Void> updateUser(@PathVariable Long id,
-                                   @RequestBody UserUpdateDTO dto) {
+                                   @Valid @RequestBody UserUpdateDTO dto) {
         return userService.updateUser(id, dto);
     }
 
@@ -82,7 +83,7 @@ public class adminController {
     @PutMapping("/{id}/status")
     @Operation(summary = "冻结 / 解冻用户")
     public Result<Void> updateUserStatus(@PathVariable Long id,
-                                         @RequestBody UserStatusDTO dto) {
+                                         @Valid @RequestBody UserStatusDTO dto) {
         return userService.updateUserStatus(id, dto);
     }
 
@@ -92,7 +93,7 @@ public class adminController {
     @PutMapping("/{id}/roles")
     @Operation(summary = "给用户批量分配角色")
     public Result<Void> assignUserRoles(@PathVariable Long id,
-                                        @RequestBody UserRoleAssignDTO dto) {
+                                        @Valid @RequestBody UserRoleAssignDTO dto) {
         return userService.assignUserRoles(id, dto);
     }
 }
